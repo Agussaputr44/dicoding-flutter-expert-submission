@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import '../datasources/movie_local_data_source.dart';
-import '../datasources/movie_remote_data_source.dart';
-import '../models/common_models/watchlist_table.dart';
+
+import '../../common/exception.dart';
+import '../../common/failure.dart';
 import '../../domain/entities/movie.dart';
 import '../../domain/entities/movie_detail.dart';
 import '../../domain/repositories/movie_repository.dart';
-import '../../common/exception.dart';
-import '../../common/failure.dart';
+import '../datasources/movie_local_data_source.dart';
+import '../datasources/movie_remote_data_source.dart';
+import '../models/common_models/watchlist_table.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;
@@ -94,8 +95,9 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) async {
     try {
-      final result = await localDataSource
-          .insertWatchlist(WatchlistTable.fromMovieEntity(movie));
+      final result = await localDataSource.insertWatchlist(
+        WatchlistTable.fromMovieEntity(movie),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -107,8 +109,9 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) async {
     try {
-      final result = await localDataSource
-          .removeWatchlist(WatchlistTable.fromMovieEntity(movie));
+      final result = await localDataSource.removeWatchlist(
+        WatchlistTable.fromMovieEntity(movie),
+      );
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));

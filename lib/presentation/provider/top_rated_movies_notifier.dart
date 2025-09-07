@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
+
 import '../../common/state_enum.dart';
 import '../../domain/entities/movie.dart';
 import '../../domain/usecases/get_top_rated_movies.dart';
-import 'package:flutter/foundation.dart';
 
 class TopRatedMoviesNotifier extends ChangeNotifier {
   final GetTopRatedMovies getTopRatedMovies;

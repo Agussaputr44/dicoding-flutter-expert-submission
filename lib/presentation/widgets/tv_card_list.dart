@@ -8,7 +8,7 @@ import '../pages/tv_pages/tv_detail_page.dart';
 class TvCard extends StatelessWidget {
   final Tv tv;
 
-  const TvCard(this.tv, {Key? key}) : super(key: key);
+  const TvCard(this.tv, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +52,14 @@ class TvCard extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                left: 16,
-                bottom: 16,
-              ),
+              margin: const EdgeInsets.only(left: 16, bottom: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
                   width: 80,
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),

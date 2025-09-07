@@ -1,38 +1,37 @@
-import 'presentation/pages/tv_pages/on_airing_tv_page.dart';
-import 'presentation/pages/tv_pages/popular_tv_page.dart';
-import 'presentation/pages/tv_pages/top_rated_tv_page.dart';
-import 'presentation/pages/tv_pages/tv_detail_page.dart';
-import 'presentation/pages/tv_pages/watchlist_tv_page.dart';
-import 'presentation/provider/tv_provider/on_airing_tv_notifier.dart';
-import 'presentation/provider/tv_provider/tv_detail_notifier.dart';
-import 'presentation/provider/tv_provider/tv_search_notifier.dart';
-import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
-import 'presentation/provider/watchlist_movies_notifier.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'common/constants.dart';
 import 'common/utils.dart';
+import 'injection.dart' as di;
 import 'presentation/pages/about_page.dart';
-import 'presentation/pages/tv_pages/home_tv_page.dart';
-import 'presentation/pages/movie_detail_page.dart';
 import 'presentation/pages/home_movie_page.dart';
+import 'presentation/pages/movie_detail_page.dart';
 import 'presentation/pages/popular_movies_page.dart';
 import 'presentation/pages/search_page.dart';
 import 'presentation/pages/top_rated_movies_page.dart';
+import 'presentation/pages/tv_pages/home_tv_page.dart';
+import 'presentation/pages/tv_pages/on_airing_tv_page.dart';
+import 'presentation/pages/tv_pages/popular_tv_page.dart';
 import 'presentation/pages/tv_pages/search_tv_page.dart';
+import 'presentation/pages/tv_pages/top_rated_tv_page.dart';
+import 'presentation/pages/tv_pages/tv_detail_page.dart';
+import 'presentation/pages/tv_pages/watchlist_tv_page.dart';
 import 'presentation/pages/watchlist_movies_page.dart';
 import 'presentation/provider/movie_detail_notifier.dart';
 import 'presentation/provider/movie_list_notifier.dart';
 import 'presentation/provider/movie_search_notifier.dart';
 import 'presentation/provider/popular_movies_notifier.dart';
 import 'presentation/provider/top_rated_movies_notifier.dart';
+import 'presentation/provider/tv_provider/on_airing_tv_notifier.dart';
 import 'presentation/provider/tv_provider/popular_tv_notifier.dart';
-import 'presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'injection.dart' as di;
-
 import 'presentation/provider/tv_provider/top_rated_tv_notifier.dart';
+import 'presentation/provider/tv_provider/tv_detail_notifier.dart';
+import 'presentation/provider/tv_provider/tv_list_notifier.dart';
+import 'presentation/provider/tv_provider/tv_search_notifier.dart';
+import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
+import 'presentation/provider/watchlist_movies_notifier.dart';
 
 void main() {
   di.init();
@@ -40,15 +39,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
+        ChangeNotifierProvider(create: (_) => di.locator<MovieListNotifier>()),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
@@ -64,24 +61,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMoviesNotifier>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<OnAiringTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSearchNotifier>(),
-        ),
+        ChangeNotifierProvider(create: (_) => di.locator<TvListNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.locator<TopRatedTvNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.locator<OnAiringTvNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.locator<PopularTvNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.locator<TvDetailNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.locator<TvSearchNotifier>()),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTvNotifier>(),
         ),
@@ -138,13 +123,13 @@ class MyApp extends StatelessWidget {
             case AboutPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => AboutPage());
             default:
-              return MaterialPageRoute(builder: (_) {
-                return Scaffold(
-                  body: Center(
-                    child: Text('Page not found :('),
-                  ),
-                );
-              });
+              return MaterialPageRoute(
+                builder: (_) {
+                  return Scaffold(
+                    body: Center(child: Text('Page not found :(')),
+                  );
+                },
+              );
           }
         },
       ),

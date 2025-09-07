@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/search_backdrop.jpg",
+      "genre_ids": [16],
+      "id": 5,
+      "name": "Search Show",
+      "origin_country": ["KR"],
+      "original_language": "ko",
+      "original_name": "Original Search Show",
+      "overview": "Search overview",
+      "popularity": 70.0,
+      "poster_path": "/search_poster.jpg",
+      "first_air_date": "2022-07-01",
+      "vote_average": 7.8,
+      "vote_count": 95
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import '../../common/constants.dart';
 class AboutPage extends StatelessWidget {
   static const ROUTE_NAME = '/about';
 
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,7 @@ class AboutPage extends StatelessWidget {
                 child: Container(
                   color: kPrussianBlue,
                   child: Center(
-                    child: Image.asset(
-                      'assets/circle-g.png',
-                      width: 128,
-                    ),
+                    child: Image.asset('assets/circle-g.png', width: 128),
                   ),
                 ),
               ),
@@ -43,7 +40,7 @@ class AboutPage extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               icon: Icon(Icons.arrow_back),
             ),
-          )
+          ),
         ],
       ),
     );

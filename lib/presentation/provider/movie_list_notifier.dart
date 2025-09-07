@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
+import '../../common/state_enum.dart';
 import '../../domain/entities/movie.dart';
 import '../../domain/usecases/get_now_playing_movies.dart';
-import '../../common/state_enum.dart';
 import '../../domain/usecases/get_popular_movies.dart';
 import '../../domain/usecases/get_top_rated_movies.dart';
-import 'package:flutter/material.dart';
 
 class MovieListNotifier extends ChangeNotifier {
   var _nowPlayingMovies = <Movie>[];

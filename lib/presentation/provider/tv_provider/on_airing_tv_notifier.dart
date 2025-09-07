@@ -1,7 +1,7 @@
-import '../../../domain/entities/tv_entities/tv.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../common/state_enum.dart';
+import '../../../domain/entities/tv_entities/tv.dart';
 import '../../../domain/usecases/tv_usecases/get_on_airing_tvs.dart';
 
 class OnAiringTvNotifier extends ChangeNotifier {

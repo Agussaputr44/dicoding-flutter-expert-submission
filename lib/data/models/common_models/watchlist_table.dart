@@ -1,7 +1,6 @@
+import 'package:equatable/equatable.dart';
 import '../../../domain/entities/movie.dart';
 import '../../../domain/entities/movie_detail.dart';
-import 'package:equatable/equatable.dart';
-
 import '../../../domain/entities/tv_entities/tv.dart';
 import '../../../domain/entities/tv_entities/tv_detail.dart';
 
@@ -10,7 +9,7 @@ class WatchlistTable extends Equatable {
   final String? title;
   final String? overview;
   final String? posterPath;
-  final String type;
+  final String type; 
 
   const WatchlistTable({
     required this.id,
@@ -38,7 +37,7 @@ class WatchlistTable extends Equatable {
         type: "tv",
       );
 
-  /// Dari database ke object
+  /// Dari database
   factory WatchlistTable.fromMap(Map<String, dynamic> map) => WatchlistTable(
         id: map['id'],
         title: map['title'],
@@ -47,7 +46,7 @@ class WatchlistTable extends Equatable {
         type: map['type'],
       );
 
-  /// Ke database (map)
+  /// Ke database
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
@@ -56,15 +55,16 @@ class WatchlistTable extends Equatable {
         'type': type,
       };
 
-  /// Convert ke Movie Entity (kalau `type == movie`)
+  /// Convert ke entity
   Movie toMovieEntity() => Movie.watchlist(
         id: id,
         title: title,
         overview: overview,
         posterPath: posterPath,
+        
       );
 
-  /// Convert ke Tv Entity (kalau `type == tv`)
+
   Tv toTvEntity() => Tv.watchlist(
         id: id,
         name: title,

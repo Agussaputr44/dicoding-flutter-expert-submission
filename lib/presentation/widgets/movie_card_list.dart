@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
 import '../../common/constants.dart';
 import '../../domain/entities/movie.dart';
 import '../pages/movie_detail_page.dart';
-import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
 
-  const MovieCard(this.movie, {Key? key}) : super(key: key);
+  const MovieCard(this.movie, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +52,14 @@ class MovieCard extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                left: 16,
-                bottom: 16,
-              ),
+              margin: const EdgeInsets.only(left: 16, bottom: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
                   width: 80,
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),

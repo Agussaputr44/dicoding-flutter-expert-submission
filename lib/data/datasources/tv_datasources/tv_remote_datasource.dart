@@ -26,8 +26,9 @@ class TvRemoteDatasourceImpl implements TvRemoteDatasource {
 
   @override
   Future<List<TvModel>> getOnAiringTVs() async {
-    final response =
-        await client.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY'));
+    final response = await client.get(
+      Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY'),
+    );
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).tvList;
     } else {
@@ -48,8 +49,9 @@ class TvRemoteDatasourceImpl implements TvRemoteDatasource {
 
   @override
   Future<List<TvModel>> getPopularTVs() async {
-    final response =
-        await client.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY'));
+    final response = await client.get(
+      Uri.parse('$BASE_URL/tv/popular?$API_KEY'),
+    );
 
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).tvList;
@@ -60,8 +62,9 @@ class TvRemoteDatasourceImpl implements TvRemoteDatasource {
 
   @override
   Future<List<TvModel>> getTopRatedTVs() async {
-    final response =
-        await client.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY'));
+    final response = await client.get(
+      Uri.parse('$BASE_URL/tv/top_rated?$API_KEY'),
+    );
 
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).tvList;
@@ -72,8 +75,9 @@ class TvRemoteDatasourceImpl implements TvRemoteDatasource {
 
   @override
   Future<List<TvModel>> getTVRecommendations(int id) async {
-    final response = await client
-        .get(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
+    final response = await client.get(
+      Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'),
+    );
 
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).tvList;
@@ -84,8 +88,9 @@ class TvRemoteDatasourceImpl implements TvRemoteDatasource {
 
   @override
   Future<List<TvModel>> searchTVs(String query) async {
-    final response = await client
-        .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
+    final response = await client.get(
+      Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'),
+    );
 
     if (response.statusCode == 200) {
       return TvResponse.fromJson(json.decode(response.body)).tvList;

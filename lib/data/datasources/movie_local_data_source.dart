@@ -1,6 +1,6 @@
-import '../../common/exception.dart';
-import 'db/database_helper.dart';
-import '../models/common_models/watchlist_table.dart';
+import 'package:ditonton/data/datasources/db/database_helper.dart';
+import 'package:ditonton/data/models/common_models/watchlist_table.dart';
+import '../../../common/exception.dart';
 
 abstract class MovieLocalDataSource {
   Future<String> insertWatchlist(WatchlistTable movie);
@@ -11,7 +11,6 @@ abstract class MovieLocalDataSource {
 
 class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   final DatabaseHelper databaseHelper;
-
   MovieLocalDataSourceImpl({required this.databaseHelper});
 
   @override
@@ -36,7 +35,8 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
 
   @override
   Future<WatchlistTable?> getMovieById(int id) async {
-    final result = await databaseHelper.getEntityById(id);
+    // Panggil helper dengan filter type 'tv'
+    final result = await databaseHelper.getEntityById(id, 'movie');
     if (result != null) {
       return WatchlistTable.fromMap(result);
     } else {
@@ -46,7 +46,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
 
   @override
   Future<List<WatchlistTable>> getWatchlistMovies() async {
-    final result = await databaseHelper.getWatchlists();
+    final result = await databaseHelper.getWatchlistsByType('movie');
     return result.map((data) => WatchlistTable.fromMap(data)).toList();
   }
 }

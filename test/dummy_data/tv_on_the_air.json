@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/backdrop.jpg",
+      "genre_ids": [18],
+      "id": 1,
+      "name": "Test Show",
+      "origin_country": ["US"],
+      "original_language": "en",
+      "original_name": "Original Test Show",
+      "overview": "Overview text here",
+      "popularity": 100.0,
+      "poster_path": "/poster.jpg",
+      "first_air_date": "2020-01-01",
+      "vote_average": 8.0,
+      "vote_count": 120
+    }
+  ]
+}

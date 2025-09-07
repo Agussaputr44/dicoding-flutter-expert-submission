@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../common/state_enum.dart';
 import '../../common/utils.dart';
 import '../provider/watchlist_movies_notifier.dart';
 import '../widgets/movie_card_list.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-movie';
 
-  const WatchlistMoviesPage({Key? key}) : super(key: key);
+  const WatchlistMoviesPage({super.key});
 
   @override
   _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
@@ -19,9 +20,12 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistMoviesNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+    Future.microtask(
+      () => Provider.of<WatchlistMoviesNotifier>(
+        context,
+        listen: false,
+      ).fetchWatchlistMovies(),
+    );
   }
 
   @override
@@ -32,24 +36,22 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistMoviesNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    Provider.of<WatchlistMoviesNotifier>(
+      context,
+      listen: false,
+    ).fetchWatchlistMovies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Watchlist Movies'),
-      ),
+      appBar: AppBar(title: Text('Watchlist Movies')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<WatchlistMoviesNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             } else if (data.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

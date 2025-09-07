@@ -25,17 +25,16 @@ import 'domain/usecases/tv_usecases/get_popular_tvs.dart';
 import 'domain/usecases/tv_usecases/get_top_rated_tvs.dart';
 import 'domain/usecases/tv_usecases/get_tv_detail.dart';
 import 'domain/usecases/tv_usecases/get_tv_recommendations.dart';
-import 'domain/usecases/tv_usecases/search_tvs.dart';
-import 'domain/usecases/tv_usecases/get_watchlist_tvs.dart';
 import 'domain/usecases/tv_usecases/get_watchlist_tv_status.dart';
-import 'domain/usecases/tv_usecases/save_watchlist_tv.dart';
+import 'domain/usecases/tv_usecases/get_watchlist_tvs.dart';
 import 'domain/usecases/tv_usecases/remove_watchlist_tv.dart';
+import 'domain/usecases/tv_usecases/save_watchlist_tv.dart';
+import 'domain/usecases/tv_usecases/search_tvs.dart';
 import 'presentation/provider/movie_detail_notifier.dart';
 import 'presentation/provider/movie_list_notifier.dart';
 import 'presentation/provider/movie_search_notifier.dart';
 import 'presentation/provider/popular_movies_notifier.dart';
 import 'presentation/provider/top_rated_movies_notifier.dart';
-import 'presentation/provider/watchlist_movies_notifier.dart';
 import 'presentation/provider/tv_provider/on_airing_tv_notifier.dart';
 import 'presentation/provider/tv_provider/popular_tv_notifier.dart';
 import 'presentation/provider/tv_provider/top_rated_tv_notifier.dart';
@@ -43,6 +42,7 @@ import 'presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'presentation/provider/tv_provider/tv_list_notifier.dart';
 import 'presentation/provider/tv_provider/tv_search_notifier.dart';
 import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
+import 'presentation/provider/watchlist_movies_notifier.dart';
 
 final locator = GetIt.instance;
 
@@ -68,8 +68,12 @@ void init() {
   );
   locator.registerFactory(() => MovieSearchNotifier(searchMovies: locator()));
   locator.registerFactory(() => PopularMoviesNotifier(locator()));
-  locator.registerFactory(() => TopRatedMoviesNotifier(getTopRatedMovies: locator()));
-  locator.registerFactory(() => WatchlistMoviesNotifier(getWatchlistMovies: locator()));
+  locator.registerFactory(
+    () => TopRatedMoviesNotifier(getTopRatedMovies: locator()),
+  );
+  locator.registerFactory(
+    () => WatchlistMoviesNotifier(getWatchlistMovies: locator()),
+  );
 
   // =========================
   // TV Providers
@@ -94,7 +98,9 @@ void init() {
   locator.registerFactory(() => TvSearchNotifier(searchTvs: locator()));
   locator.registerFactory(() => PopularTvNotifier(locator()));
   locator.registerFactory(() => TopRatedTvNotifier(getTopRatedTvs: locator()));
-  locator.registerFactory(() => WatchlistTvNotifier(getWatchlistTvs: locator()));
+  locator.registerFactory(
+    () => WatchlistTvNotifier(getWatchlistTvs: locator()),
+  );
 
   // =========================
   // Movie Use Cases
@@ -144,13 +150,17 @@ void init() {
   // Data Sources
   // =========================
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+    () => MovieRemoteDataSourceImpl(client: locator()),
+  );
   locator.registerLazySingleton<MovieLocalDataSource>(
-      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+    () => MovieLocalDataSourceImpl(databaseHelper: locator()),
+  );
   locator.registerLazySingleton<TvRemoteDatasource>(
-      () => TvRemoteDatasourceImpl(client: locator()));
+    () => TvRemoteDatasourceImpl(client: locator()),
+  );
   locator.registerLazySingleton<TvLocalDatasource>(
-      () => TvLocalDatasourceImpl(databaseHelper: locator()));
+    () => TvLocalDatasourceImpl(databaseHelper: locator()),
+  );
 
   // =========================
   // Helpers & External

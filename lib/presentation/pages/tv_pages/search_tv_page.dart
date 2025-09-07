@@ -1,22 +1,20 @@
-import '../../provider/tv_provider/tv_search_notifier.dart';
-import '../../widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/state_enum.dart';
+import '../../provider/tv_provider/tv_search_notifier.dart';
+import '../../widgets/tv_card_list.dart';
 
 class SearchTvPage extends StatelessWidget {
   static const ROUTE_NAME = '/search-tv';
 
-  const SearchTvPage({Key? key}) : super(key: key);
+  const SearchTvPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Search'),
-      ),
+      appBar: AppBar(title: Text('Search')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -24,8 +22,10 @@ class SearchTvPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<TvSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                Provider.of<TvSearchNotifier>(
+                  context,
+                  listen: false,
+                ).fetchMovieSearch(query);
               },
               decoration: InputDecoration(
                 hintText: 'Search title',
@@ -35,16 +35,11 @@ class SearchTvPage extends StatelessWidget {
               textInputAction: TextInputAction.search,
             ),
             SizedBox(height: 16),
-            Text(
-              'Search Result',
-              style: kHeading6,
-            ),
+            Text('Search Result', style: kHeading6),
             Consumer<TvSearchNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return Center(child: CircularProgressIndicator());
                 } else if (data.state == RequestState.Loaded) {
                   final result = data.searchResult;
                   return Expanded(
@@ -58,9 +53,7 @@ class SearchTvPage extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
-                  );
+                  return Expanded(child: Container());
                 }
               },
             ),

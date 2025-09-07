@@ -16,7 +16,7 @@ import 'tv_detail_page.dart';
 class HomeTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/home-tv';
 
-  const HomeTvPage({Key? key}) : super(key: key);
+  const HomeTvPage({super.key});
 
   @override
   _HomeTvPageState createState() => _HomeTvPageState();
@@ -26,10 +26,12 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
-      ..fetchOnAiringTvs()
-      ..fetchPopularTvs()
-      ..fetchTopRatedTvs());
+    Future.microtask(
+      () => Provider.of<TvListNotifier>(context, listen: false)
+        ..fetchOnAiringTvs()
+        ..fetchPopularTvs()
+        ..fetchTopRatedTvs(),
+    );
   }
 
   @override
@@ -49,7 +51,7 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
               Navigator.pushNamed(context, SearchTvPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -144,7 +146,7 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
 class TvList extends StatelessWidget {
   final List<Tv> tvs;
 
-  const TvList(this.tvs, {Key? key}) : super(key: key);
+  const TvList(this.tvs, {super.key});
 
   @override
   Widget build(BuildContext context) {

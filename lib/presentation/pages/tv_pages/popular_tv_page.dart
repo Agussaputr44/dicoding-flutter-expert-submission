@@ -8,7 +8,7 @@ import '../../widgets/tv_card_list.dart';
 class PopularTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-tv';
 
-  const PopularTvPage({Key? key}) : super(key: key);
+  const PopularTvPage({super.key});
 
   @override
   _PopularTvPageState createState() => _PopularTvPageState();
@@ -18,25 +18,24 @@ class _PopularTvPageState extends State<PopularTvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<PopularTvNotifier>(context, listen: false)
-            .fetchPopularTvs());
+    Future.microtask(
+      () => Provider.of<PopularTvNotifier>(
+        context,
+        listen: false,
+      ).fetchPopularTvs(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Popular Tvs'),
-      ),
+      appBar: AppBar(title: Text('Popular Tvs')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<PopularTvNotifier>(
           builder: (context, data, child) {
             if (data.state == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             } else if (data.state == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {

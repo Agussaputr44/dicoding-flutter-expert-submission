@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/recommend_backdrop.jpg",
+      "genre_ids": [35],
+      "id": 2,
+      "name": "Recommended Show",
+      "origin_country": ["US"],
+      "original_language": "en",
+      "original_name": "Original Recommended Show",
+      "overview": "Recommended overview",
+      "popularity": 50.0,
+      "poster_path": "/recommend_poster.jpg",
+      "first_air_date": "2021-01-01",
+      "vote_average": 7.5,
+      "vote_count": 80
+    }
+  ]
+}

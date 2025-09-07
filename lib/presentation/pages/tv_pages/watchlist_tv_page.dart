@@ -9,7 +9,7 @@ import '../../../common/utils.dart';
 class WatchlistTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-tv';
 
-  const WatchlistTvPage({Key? key}) : super(key: key);
+  const WatchlistTvPage({super.key});
 
   @override
   _WatchlistTvPageState createState() => _WatchlistTvPageState();
@@ -19,9 +19,12 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistTvNotifier>(context, listen: false)
-            .fetchWatchlistTv());
+    Future.microtask(
+      () => Provider.of<WatchlistTvNotifier>(
+        context,
+        listen: false,
+      ).fetchWatchlistTv(),
+    );
   }
 
   @override
@@ -38,17 +41,13 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Watchlist TVs'),
-      ),
+      appBar: AppBar(title: Text('Watchlist TVs')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<WatchlistTvNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             } else if (data.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
