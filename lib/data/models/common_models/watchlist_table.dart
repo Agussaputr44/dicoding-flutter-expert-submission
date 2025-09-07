@@ -9,7 +9,7 @@ class WatchlistTable extends Equatable {
   final String? title;
   final String? overview;
   final String? posterPath;
-  final String type; 
+  final String type;
 
   const WatchlistTable({
     required this.id,
@@ -21,56 +21,54 @@ class WatchlistTable extends Equatable {
 
   /// Dari MovieDetail
   factory WatchlistTable.fromMovieEntity(MovieDetail movie) => WatchlistTable(
-        id: movie.id,
-        title: movie.title,
-        overview: movie.overview,
-        posterPath: movie.posterPath,
-        type: "movie",
-      );
+    id: movie.id,
+    title: movie.title,
+    overview: movie.overview,
+    posterPath: movie.posterPath,
+    type: "movie",
+  );
 
   /// Dari TvDetail
   factory WatchlistTable.fromTvEntity(TvDetail tv) => WatchlistTable(
-        id: tv.id,
-        title: tv.name,
-        overview: tv.overview,
-        posterPath: tv.posterPath,
-        type: "tv",
-      );
+    id: tv.id,
+    title: tv.name,
+    overview: tv.overview,
+    posterPath: tv.posterPath,
+    type: "tv",
+  );
 
   /// Dari database
   factory WatchlistTable.fromMap(Map<String, dynamic> map) => WatchlistTable(
-        id: map['id'],
-        title: map['title'],
-        overview: map['overview'],
-        posterPath: map['posterPath'],
-        type: map['type'],
-      );
+    id: map['id'],
+    title: map['title'],
+    overview: map['overview'],
+    posterPath: map['posterPath'],
+    type: map['type'],
+  );
 
   /// Ke database
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'overview': overview,
-        'posterPath': posterPath,
-        'type': type,
-      };
+    'id': id,
+    'title': title,
+    'overview': overview,
+    'posterPath': posterPath,
+    'type': type,
+  };
 
   /// Convert ke entity
   Movie toMovieEntity() => Movie.watchlist(
-        id: id,
-        title: title,
-        overview: overview,
-        posterPath: posterPath,
-        
-      );
-
+    id: id,
+    title: title,
+    overview: overview,
+    posterPath: posterPath,
+  );
 
   Tv toTvEntity() => Tv.watchlist(
-        id: id,
-        name: title,
-        overview: overview,
-        posterPath: posterPath,
-      );
+    id: id,
+    name: title,
+    overview: overview,
+    posterPath: posterPath,
+  );
 
   @override
   List<Object?> get props => [id, title, overview, posterPath, type];

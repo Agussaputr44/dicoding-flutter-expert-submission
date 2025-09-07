@@ -8,7 +8,6 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv_detail.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_detail.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_recommendations.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/remove_watchlist_tv.dart';

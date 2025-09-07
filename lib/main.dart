@@ -1,3 +1,5 @@
+import 'package:ditonton/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +35,9 @@ import 'presentation/provider/tv_provider/tv_search_notifier.dart';
 import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 import 'presentation/provider/watchlist_movies_notifier.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   di.init();
   runApp(MyApp());
 }

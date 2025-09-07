@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584918864877",
+    "project_id": "dicoding-expert-submissi-1c649",
+    "storage_bucket": "dicoding-expert-submissi-1c649.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584918864877:android:2a87843cce596fdd998de4",
+        "android_client_info": {
+          "package_name": "com.dicoding.ditonton"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeqETVxLn7MAlPNkJTFjt7UwKvAVoHNzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

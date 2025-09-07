@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -154,6 +155,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FirebaseCrashlytics.instance.crash();
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

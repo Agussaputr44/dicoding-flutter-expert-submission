@@ -51,27 +51,27 @@ class DatabaseHelper {
     );
   }
 
- Future<int> insertWatchlist(dynamic watchlist) async {
-  final db = await database;
-  print("DB: insert ${watchlist.toJson()}");
-  return await db!.insert(_tblWatchlist, watchlist.toJson());
-}
-
-Future<Map<String, dynamic>?> getEntityById(int id, String type) async {
-  final db = await database;
-  print("DB: query getEntityById($id, $type)");
-  final results = await db!.query(
-    _tblWatchlist,
-    where: 'id = ? AND type = ?',
-    whereArgs: [id, type],
-  );
-  print("DB: result = $results");
-  if (results.isNotEmpty) {
-    return results.first;
-  } else {
-    return null;
+  Future<int> insertWatchlist(dynamic watchlist) async {
+    final db = await database;
+    print("DB: insert ${watchlist.toJson()}");
+    return await db!.insert(_tblWatchlist, watchlist.toJson());
   }
-}
+
+  Future<Map<String, dynamic>?> getEntityById(int id, String type) async {
+    final db = await database;
+    print("DB: query getEntityById($id, $type)");
+    final results = await db!.query(
+      _tblWatchlist,
+      where: 'id = ? AND type = ?',
+      whereArgs: [id, type],
+    );
+    print("DB: result = $results");
+    if (results.isNotEmpty) {
+      return results.first;
+    } else {
+      return null;
+    }
+  }
 
   Future<List<Map<String, dynamic>>> getWatchlists() async {
     final db = await database;

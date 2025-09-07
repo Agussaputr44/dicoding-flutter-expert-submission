@@ -37,7 +37,7 @@ class TvLocalDatasourceImpl implements TvLocalDatasource {
     }
   }
 
- @override
+  @override
   Future<WatchlistTable?> getTvById(int id) async {
     final result = await databaseHelper.getEntityById(id, 'tv');
     if (result != null) {
@@ -46,7 +46,6 @@ class TvLocalDatasourceImpl implements TvLocalDatasource {
       return null;
     }
   }
-
 
   @override
   Future<List<WatchlistTable>> getWatchlistTvs() async {
