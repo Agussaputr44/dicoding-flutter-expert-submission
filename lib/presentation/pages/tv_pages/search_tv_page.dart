@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/state_enum.dart';
-import '../../provider/tv_provider/tv_search_notifier.dart';
+import '../../bloc/tv_search_bloc.dart';
+import '../../bloc/tv_search_event.dart';
+import '../../bloc/tv_search_state.dart';
 import '../../widgets/tv_card_list.dart';
 
 class SearchTvPage extends StatelessWidget {
@@ -14,7 +16,7 @@ class SearchTvPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Search')),
+      appBar: AppBar(title: const Text('Search')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -22,38 +24,35 @@ class SearchTvPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<TvSearchNotifier>(
-                  context,
-                  listen: false,
-                ).fetchMovieSearch(query);
+                context.read<TvSearchBloc>().add(FetchTvSearch(query));
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
               textInputAction: TextInputAction.search,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text('Search Result', style: kHeading6),
-            Consumer<TvSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.Loading) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (data.state == RequestState.Loaded) {
-                  final result = data.searchResult;
+            BlocBuilder<TvSearchBloc, TvSearchState>(
+              builder: (context, state) {
+                if (state.state == RequestState.Loading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state.state == RequestState.Loaded) {
+                  final result = state.searchResult;
                   return Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return TvCard(movie);
+                        final tv = state.searchResult[index];
+                        return TvCard(tv);
                       },
                       itemCount: result.length,
                     ),
                   );
                 } else {
-                  return Expanded(child: Container());
+                  return const Expanded(child: Center(child: Text('No results')));
                 }
               },
             ),

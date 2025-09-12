@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../common/constants.dart';
+import '../../../common/state_enum.dart';
+import '../../../common/utils.dart';
+import '../../../domain/entities/tv_entities/tv.dart';
+import '../../bloc/tv_list_bloc.dart';
+import '../../bloc/tv_list_event.dart';
+import '../../bloc/tv_list_state.dart';
 import 'on_airing_tv_page.dart';
 import 'popular_tv_page.dart';
 import 'search_tv_page.dart';
 import 'top_rated_tv_page.dart';
-import '../../../common/constants.dart';
-import '../../../common/state_enum.dart';
-import '../../../domain/entities/tv_entities/tv.dart';
-import '../../provider/tv_provider/tv_list_notifier.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../common/utils.dart';
 import 'tv_detail_page.dart';
 
 class HomeTvPage extends StatefulWidget {
@@ -26,12 +28,12 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<TvListNotifier>(context, listen: false)
-        ..fetchOnAiringTvs()
-        ..fetchPopularTvs()
-        ..fetchTopRatedTvs(),
-    );
+    Future.microtask(() {
+      context.read<TvListBloc>()
+        ..add(FetchOnAiringTvs())
+        ..add(FetchPopularTvs())
+        ..add(FetchTopRatedTvs());
+    });
   }
 
   @override
@@ -44,13 +46,13 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TV Shows'),
+        title: const Text('TV Shows'),
         actions: [
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, SearchTvPage.ROUTE_NAME);
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
         ],
       ),
@@ -66,15 +68,15 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
                   Navigator.pushNamed(context, OnAiringTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.onAiringState;
-                  if (state == RequestState.Loading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state == RequestState.Loaded) {
-                    return TvList(data.onAiringTvs);
+              BlocBuilder<TvListBloc, TvListState>(
+                builder: (context, state) {
+                  final stateOnAiring = state.onAiringState;
+                  if (stateOnAiring == RequestState.Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (stateOnAiring == RequestState.Loaded) {
+                    return TvList(state.onAiringTvs);
                   } else {
-                    return Text('Failed');
+                    return const Text('Failed');
                   }
                 },
               ),
@@ -84,15 +86,15 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
                   Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.popularTvsState;
-                  if (state == RequestState.Loading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state == RequestState.Loaded) {
-                    return TvList(data.popularTvs);
+              BlocBuilder<TvListBloc, TvListState>(
+                builder: (context, state) {
+                  final statePopular = state.popularTvsState;
+                  if (statePopular == RequestState.Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (statePopular == RequestState.Loaded) {
+                    return TvList(state.popularTvs);
                   } else {
-                    return Text('Failed');
+                    return const Text('Failed');
                   }
                 },
               ),
@@ -102,15 +104,15 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
                   Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvListNotifier>(
-                builder: (context, data, child) {
-                  final state = data.topRatedTvsState;
-                  if (state == RequestState.Loading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state == RequestState.Loaded) {
-                    return TvList(data.topRatedTvs);
+              BlocBuilder<TvListBloc, TvListState>(
+                builder: (context, state) {
+                  final stateTopRated = state.topRatedTvsState;
+                  if (stateTopRated == RequestState.Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (stateTopRated == RequestState.Loaded) {
+                    return TvList(state.topRatedTvs);
                   } else {
-                    return Text('Failed');
+                    return const Text('Failed');
                   }
                 },
               ),
@@ -128,10 +130,10 @@ class _HomeTvPageState extends State<HomeTvPage> with RouteAware {
         Text(title, style: kHeading6),
         InkWell(
           onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Row(
-              children: const [
+              children: [
                 Text('See More'),
                 Icon(Icons.arrow_forward_ios, size: 14),
               ],
@@ -172,8 +174,8 @@ class TvList extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
                   placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

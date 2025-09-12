@@ -37,6 +37,7 @@ dependencies:
   flutter_lints: ^6.0.0
   firebase_core: ^4.1.0
   firebase_crashlytics: ^5.0.1
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   mockito: ^5.0.8
@@ -49,6 +50,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
   sqflite_common: any
+  bloc_test: ^10.0.0
 flutter:
 
   # The following line ensures that the Material Icons font is

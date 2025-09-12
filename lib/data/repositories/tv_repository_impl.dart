@@ -120,9 +120,7 @@ class TvRepositoryImpl implements TvRepository {
 
   @override
   Future<bool> isAddedToWatchlist(int id) async {
-    print('REPO: check isAdded for $id');
     final result = await localDataSource.getTvById(id);
-    print('REPO: getTvById result = $result');
     return result != null;
   }
 

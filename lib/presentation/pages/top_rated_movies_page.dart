@@ -1,8 +1,11 @@
-import '../../common/state_enum.dart';
-import '../provider/top_rated_movies_notifier.dart';
-import '../widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; 
+
+import '../../common/state_enum.dart';
+import '../bloc/top_rated_movies_bloc.dart'; 
+import '../bloc/top_rated_movies_event.dart'; 
+import '../bloc/top_rated_movies_state.dart';
+import '../widgets/movie_card_list.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/top-rated-movie';
@@ -18,10 +21,9 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<TopRatedMoviesNotifier>(
-        context,
-        listen: false,
-      ).fetchTopRatedMovies(),
+      () {
+        context.read<TopRatedMoviesBloc>().add(FetchTopRatedMovies());
+      },
     );
   }
 
@@ -31,22 +33,22 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       appBar: AppBar(title: Text('Top Rated Movies')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>( 
+          builder: (context, state) {
+            if (state.state == RequestState.Loading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state.state == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.movies[index];
+                  final movie = state.movies[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.movies.length,
+                itemCount: state.movies.length,
               );
             } else {
               return Center(
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
           },

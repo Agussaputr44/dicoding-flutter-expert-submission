@@ -1,6 +1,6 @@
-import 'package:ditonton/data/datasources/db/database_helper.dart';
-import 'package:ditonton/data/models/common_models/watchlist_table.dart';
 import '../../../common/exception.dart';
+import '../models/common_models/watchlist_table.dart';
+import 'db/database_helper.dart';
 
 abstract class MovieLocalDataSource {
   Future<String> insertWatchlist(WatchlistTable movie);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // CHANGE: Import flutter_bloc
 
 import '../../common/state_enum.dart';
 import '../../common/utils.dart';
-import '../provider/watchlist_movies_notifier.dart';
+import '../bloc/watchlist_movies_bloc.dart'; // CHANGE: Import watchlist_movies_bloc
+import '../bloc/watchlist_movies_event.dart'; // CHANGE: Import watchlist_movies_event
+import '../bloc/watchlist_movies_state.dart'; // CHANGE: Import watchlist_movies_state
 import '../widgets/movie_card_list.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
@@ -21,10 +23,10 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<WatchlistMoviesNotifier>(
-        context,
-        listen: false,
-      ).fetchWatchlistMovies(),
+      () {
+        // CHANGE: Mengganti Provider dengan context.read untuk memicu event
+        context.read<WatchlistMoviesBloc>().add(FetchWatchlistMovies());
+      },
     );
   }
 
@@ -36,10 +38,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistMoviesNotifier>(
-      context,
-      listen: false,
-    ).fetchWatchlistMovies();
+    // CHANGE: Mengganti Provider dengan context.read untuk memicu event
+    context.read<WatchlistMoviesBloc>().add(FetchWatchlistMovies());
   }
 
   @override
@@ -48,22 +48,22 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
       appBar: AppBar(title: Text('Watchlist Movies')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+        child: BlocBuilder<WatchlistMoviesBloc, WatchlistMoviesState>( // CHANGE: Ganti Consumer dengan BlocBuilder
+          builder: (context, state) {
+            if (state.watchlistState == RequestState.Loading) {
               return Center(child: CircularProgressIndicator());
-            } else if (data.watchlistState == RequestState.Loaded) {
+            } else if (state.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.watchlistMovies[index];
+                  final movie = state.watchlistMovies[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.watchlistMovies.length,
+                itemCount: state.watchlistMovies.length,
               );
             } else {
               return Center(
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
           },

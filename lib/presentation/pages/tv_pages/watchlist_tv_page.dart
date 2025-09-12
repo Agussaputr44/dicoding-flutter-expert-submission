@@ -1,10 +1,12 @@
-import '../../provider/tv_provider/watchlist_tv_notifier.dart';
-import '../../widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/state_enum.dart';
 import '../../../common/utils.dart';
+import '../../bloc/watchlist_tv_bloc.dart';
+import '../../bloc/watchlist_tv_event.dart';
+import '../../bloc/watchlist_tv_state.dart';
+import '../../widgets/tv_card_list.dart';
 
 class WatchlistTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-tv';
@@ -20,10 +22,7 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<WatchlistTvNotifier>(
-        context,
-        listen: false,
-      ).fetchWatchlistTv(),
+      () => context.read<WatchlistTvBloc>().add(FetchWatchlistTvs()),
     );
   }
 
@@ -35,31 +34,31 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistTvNotifier>(context, listen: false).fetchWatchlistTv();
+    context.read<WatchlistTvBloc>().add(FetchWatchlistTvs());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Watchlist TVs')),
+      appBar: AppBar(title: const Text('Watchlist TVs')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistTvNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (data.watchlistState == RequestState.Loaded) {
+        child: BlocBuilder<WatchlistTvBloc, WatchlistTvState>(
+          builder: (context, state) {
+            if (state.state == RequestState.Loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state.state == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tv = data.watchlistTvs[index];
+                  final tv = state.watchlistTvs[index];
                   return TvCard(tv);
                 },
-                itemCount: data.watchlistTvs.length,
+                itemCount: state.watchlistTvs.length,
               );
             } else {
               return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
+                key: const Key('error_message'),
+                child: Text(state.message),
               );
             }
           },
