@@ -38,19 +38,6 @@ import 'presentation/pages/tv_pages/top_rated_tv_page.dart';
 import 'presentation/pages/tv_pages/tv_detail_page.dart';
 import 'presentation/pages/tv_pages/watchlist_tv_page.dart';
 import 'presentation/pages/watchlist_movies_page.dart';
-import 'presentation/provider/movie_detail_notifier.dart';
-import 'presentation/provider/movie_list_notifier.dart';
-import 'presentation/provider/movie_search_notifier.dart';
-import 'presentation/provider/popular_movies_notifier.dart';
-import 'presentation/provider/top_rated_movies_notifier.dart';
-import 'presentation/provider/tv_provider/on_airing_tv_notifier.dart';
-import 'presentation/provider/tv_provider/popular_tv_notifier.dart';
-import 'presentation/provider/tv_provider/top_rated_tv_notifier.dart';
-import 'presentation/provider/tv_provider/tv_detail_notifier.dart';
-import 'presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'presentation/provider/tv_provider/tv_search_notifier.dart';
-import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
-import 'presentation/provider/watchlist_movies_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,31 +72,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => di.locator<MovieListNotifier>()),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(create: (_) => di.locator<TvListNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<TopRatedTvNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<OnAiringTvNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<PopularTvNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<TvDetailNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<TvSearchNotifier>()),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvNotifier>(),
-        ),
 
         // TODO: bloc lainnya
         BlocProvider(create: (_) => di.locator<MovieDetailBloc>()),

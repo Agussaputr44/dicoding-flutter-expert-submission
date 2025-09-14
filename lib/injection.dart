@@ -11,7 +11,6 @@ import 'presentation/bloc/tv_list_bloc.dart';
 import 'presentation/bloc/tv_search_bloc.dart';
 import 'presentation/bloc/watchlist_movies_bloc.dart';
 import 'presentation/bloc/watchlist_tv_bloc.dart';
-import 'presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
@@ -47,40 +46,9 @@ import 'domain/usecases/tv_usecases/remove_watchlist_tv.dart';
 import 'domain/usecases/tv_usecases/save_watchlist_tv.dart';
 import 'domain/usecases/tv_usecases/search_tvs.dart';
 import 'presentation/bloc/movie_detail_bloc.dart';
-import 'presentation/provider/movie_list_notifier.dart';
-import 'presentation/provider/movie_search_notifier.dart';
-import 'presentation/provider/popular_movies_notifier.dart';
-import 'presentation/provider/top_rated_movies_notifier.dart';
-import 'presentation/provider/tv_provider/on_airing_tv_notifier.dart';
-import 'presentation/provider/tv_provider/popular_tv_notifier.dart';
-import 'presentation/provider/tv_provider/top_rated_tv_notifier.dart';
-import 'presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'presentation/provider/tv_provider/tv_search_notifier.dart';
-import 'presentation/provider/tv_provider/watchlist_tv_notifier.dart';
-import 'presentation/provider/watchlist_movies_notifier.dart';
-
 final locator = GetIt.instance;
 
 Future<void> init() async {
-  // =========================
-  // Movie Providers
-  // =========================
-  locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-    ),
-  );
-
-  locator.registerFactory(() => MovieSearchNotifier(searchMovies: locator()));
-  locator.registerFactory(() => PopularMoviesNotifier(locator()));
-  locator.registerFactory(
-    () => TopRatedMoviesNotifier(getTopRatedMovies: locator()),
-  );
-  locator.registerFactory(
-    () => WatchlistMoviesNotifier(getWatchlistMovies: locator()),
-  );
 
   // =========================
   // Movie Bloc
@@ -152,32 +120,6 @@ Future<void> init() async {
     () => WatchlistTvBloc(getWatchlistTvs: locator()),
   );
 
-  // =========================
-  // TV Providers
-  // =========================
-  locator.registerFactory(
-    () => TvListNotifier(
-      getOnAiringTvs: locator(),
-      getPopularTvs: locator(),
-      getTopRatedTvs: locator(),
-    ),
-  );
-  locator.registerFactory(() => OnAiringTvNotifier(getOnAiringTvs: locator()));
-  locator.registerFactory(
-    () => TvDetailNotifier(
-      getTvDetail: locator(),
-      getTvRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(() => TvSearchNotifier(searchTvs: locator()));
-  locator.registerFactory(() => PopularTvNotifier(locator()));
-  locator.registerFactory(() => TopRatedTvNotifier(getTopRatedTvs: locator()));
-  locator.registerFactory(
-    () => WatchlistTvNotifier(getWatchlistTvs: locator()),
-  );
 
   // =========================
   // Movie Use Cases
